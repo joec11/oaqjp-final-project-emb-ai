@@ -19,12 +19,12 @@ def detect_emotion():
     # Get the input text from the HTML request
     text_to_analyze = request.args.get('textToAnalyze')
 
-    # If no text is provided, return an error message
-    if not text_to_analyze:
-        return "No text provided! Please enter some text."
-
     # Call the emotion detector function
     response = emotion_detector(text_to_analyze)
+
+    # Check if dominant_emotion is None (indicating invalid input)
+    if response.get('dominant_emotion') is None:
+        return "Invalid text! Please try again!"
 
     # Extract emotion scores from the response
     try:
